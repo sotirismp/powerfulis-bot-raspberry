@@ -1,4 +1,4 @@
-const { bot, getOpts } = require("../config");
+const { bot } = require("../config");
 const chatId = process.env.CHAT_ID;
 
 const fileOptions = {

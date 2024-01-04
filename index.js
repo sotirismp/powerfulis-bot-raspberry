@@ -1,14 +1,14 @@
-const { bot } = require("./config");
-const { ping } = require("./commands/ping");
-const { turnOnPc } = require("./commands/on");
-const { turnOffPc } = require("./commands/off");
-const { flip } = require("./commands/flip");
-const { roll } = require("./commands/roll");
-const { dice } = require("./commands/dice");
-const { screen } = require("./commands/screen");
-const { photo } = require("./commands/photo");
-const { start } = require("./commands/start");
-const { isMessageExpired } = require("./utils/isMessageExpired");
+const { bot } = require("./src/config");
+const { ping } = require("./src/commands/ping");
+const { turnOnPc } = require("./src/commands/on");
+const { turnOffPc } = require("./src/commands/off");
+const { flip } = require("./src/commands/flip");
+const { roll } = require("./src/commands/roll");
+const { dice } = require("./src/commands/dice");
+const { screen } = require("./src/commands/screen");
+const { photo } = require("./src/commands/photo");
+const { start } = require("./src/commands/start");
+const { isMessageExpired } = require("./src/utils/isMessageExpired");
 
 const OWNER = process.env.OWNER;
 const chatId = Number(process.env.CHAT_ID);
@@ -44,12 +44,12 @@ bot.on("message", async ({ text, chat: { id, ...rest2 }, from, date, ...rest }) 
     case "/photo":
       photo();
       break;
-    case "/screen1":
-      screen(0);
-      break;
-    case "/screen2":
-      screen(1);
-      break;
+    // case "/screen1":
+    //   screen(0);
+    //   break;
+    // case "/screen2":
+    //   screen(1);
+    //   break;
     default:
       bot.sendMessage(id, "Unknown command");
   }

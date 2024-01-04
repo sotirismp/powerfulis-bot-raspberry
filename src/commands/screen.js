@@ -9,7 +9,7 @@ exports.screen = async (screenId, msg) => {
     if (resp.status === 400) throw new Error("There is not such a Screen");
     const buffer = Buffer.from(await (await resp.blob()).arrayBuffer());
     if (buffer) sendPhoto(buffer, msg);
-  } catch (err) {
-    sendMessage(err.message, msg);
+  } catch ({ message }) {
+    sendMessage(message, msg);
   }
 };
