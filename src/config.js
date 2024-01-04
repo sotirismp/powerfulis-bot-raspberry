@@ -1,7 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const TelegramBot = require("node-telegram-bot-api");
-const NodeWebcam = require("node-webcam");
 const chatId = Number(process.env.CHAT_ID);
 const token = process.env.TOKEN;
 
