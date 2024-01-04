@@ -1,7 +1,7 @@
 import { sendMessage } from "../utils/sendMessage.js";
 import { exec } from "child_process";
 import Ping from "ping";
-const SH_PATH = process.env.CHAT_ID;
+const SH_PATH = process.env.SH_PATH;
 const host = process.env.PC_IP;
 
 export const turnOnPc = async (msg) => {
