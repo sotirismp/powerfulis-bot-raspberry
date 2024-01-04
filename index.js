@@ -14,7 +14,7 @@ const chatId = Number(process.env.CHAT_ID);
 
 bot.on("message", async ({ text, chat: { id }, from, date }) => {
   if (isMessageExpired(date)) return;
-  if (from.username !== OWNER) return await sendMessage(`I'm sorry, you don't have permissions 😟`);
+  if (from.username !== OWNER) return await bot.sendMessage(id, `I'm sorry, you don't have permissions 😟`);
   if (chatId !== id) return;
   if (!text.startsWith("/")) return await sendMessage(`I'm listening to commands. \ntype /start and check my commands`);
 
