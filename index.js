@@ -7,15 +7,16 @@ import { turnOffPc } from "./src/commands/off.js";
 import { photo } from "./src/commands/photo.js";
 import { start } from "./src/commands/start.js";
 import { isMessageExpired } from "./src/utils/isMessageExpired.js";
+import { sendMessage } from "./src/utils/sendMessage.js";
 
 const OWNER = process.env.OWNER;
 const chatId = Number(process.env.CHAT_ID);
 
 bot.on("message", async ({ text, chat: { id }, from, date }) => {
   if (isMessageExpired(date)) return;
+  if (from.username !== OWNER) return await sendMessage(`I'm sorry, you don't have permissions 😟`);
   if (chatId !== id) return;
-  if (from.username !== OWNER) return;
-  if (!text.startsWith("/")) return bot.sendMessage(chatId, `I'm listening to commands. \ntype /start and check my commands`);
+  if (!text.startsWith("/")) return await sendMessage(`I'm listening to commands. \ntype /start and check my commands`);
 
   switch (text) {
     case "/start":
