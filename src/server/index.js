@@ -4,10 +4,10 @@ import { start } from "../commands/start.js";
 const PORT = 3000;
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   try {
-    sendMessage("PC turned on 🚀");
-    start();
+    await sendMessage("PC turned on 🚀");
+    await start();
     res.send();
   } catch ({ message }) {
     sendMessage(message);
