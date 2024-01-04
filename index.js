@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { bot } from "./src/config.js";
 import { ping } from "./src/commands/ping.js";
 import { turnOnPc } from "./src/commands/on.js";
@@ -9,7 +11,7 @@ import { isMessageExpired } from "./src/utils/isMessageExpired.js";
 const OWNER = process.env.OWNER;
 const chatId = Number(process.env.CHAT_ID);
 
-bot.on("message", async ({ text, chat: { id, ...rest2 }, from, date, ...rest }) => {
+bot.on("message", async ({ text, chat: { id }, from, date }) => {
   if (isMessageExpired(date)) return;
   if (chatId !== id) return;
   if (from.username !== OWNER) return;

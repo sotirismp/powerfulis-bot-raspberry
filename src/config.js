@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
-import TelegramBot from "node-telegram-bot-api";
 dotenv.config();
 const token = process.env.TOKEN;
+import TelegramBot from "node-telegram-bot-api";
+import app from "./server/index.js";
 
 export const bot = new TelegramBot(token, { polling: true });
 
@@ -28,12 +29,12 @@ export const options = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
       [
-        { text: "Turn ON PC", callback_data: "on" },
-        { text: "Turn OFF PC", callback_data: "off" },
+        { text: "Turn ON PC ⚡", callback_data: "on" },
+        { text: "Turn OFF PC ⛔", callback_data: "off" },
       ],
       [
-        { text: "Photo", callback_data: "photo" },
-        { text: "Ping", callback_data: "ping" },
+        { text: "Photo 📸", callback_data: "photo" },
+        { text: "Ping 🏓", callback_data: "ping" },
       ],
     ],
   }),
