@@ -1,7 +1,6 @@
-const { bot, getOpts } = require("../config");
-const chatId = Number(process.env.CHAT_ID);
+const { sendMessage } = require("../utils/sendMessage");
 
 exports.flip = (msg) => {
   const result = Math.floor(Math.random() * 2) ? "Heads" : "Tails";
-  msg ? bot.editMessageText(result, getOpts(msg)) : bot.sendMessage(chatId, result);
+  sendMessage(result, msg);
 };

@@ -61,32 +61,18 @@ const options = {
         { text: "Screen2", callback_data: "screen2" },
       ],
       [
-        { text: "Flip", callback_data: "flip" },
-        { text: "Roll", callback_data: "roll" },
-        { text: "Dice", callback_data: "dice" },
-      ],
-      [
         { text: "Ping", callback_data: "ping" },
         { text: "Turn ON", callback_data: "on" },
         { text: "Turn OFF", callback_data: "off" },
       ],
+      [
+        { text: "Flip", callback_data: "flip" },
+        { text: "Roll", callback_data: "roll" },
+        { text: "Dice", callback_data: "dice" },
+      ],
     ],
   }),
 };
-
-const webcamOpts = {
-  width: 1280,
-  height: 720,
-  quality: 100,
-  frames: 60,
-  delay: 0,
-  output: "jpeg",
-  device: false,
-  callbackReturn: "buffer",
-  verbose: false,
-};
-
-const Webcam = NodeWebcam.create(webcamOpts);
 
 const getOpts = (msg) => {
   return {
@@ -96,6 +82,5 @@ const getOpts = (msg) => {
 };
 
 exports.getOpts = getOpts;
-exports.webcam = Webcam;
 exports.options = options;
 exports.bot = bot;

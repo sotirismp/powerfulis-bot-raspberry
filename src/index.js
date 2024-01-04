@@ -1,4 +1,4 @@
-const { bot, options } = require("./config");
+const { bot } = require("./config");
 const { ping } = require("./commands/ping");
 const { turnOnPc } = require("./commands/on");
 const { turnOffPc } = require("./commands/off");
@@ -8,11 +8,13 @@ const { dice } = require("./commands/dice");
 const { screen } = require("./commands/screen");
 const { photo } = require("./commands/photo");
 const { start } = require("./commands/start");
+const { isMessageExpired } = require("./utils/isMessageExpired");
 
 const OWNER = process.env.OWNER;
 const chatId = Number(process.env.CHAT_ID);
 
-bot.on("message", async ({ text, chat: { id, ...rest2 }, from, ...rest }) => {
+bot.on("message", async ({ text, chat: { id, ...rest2 }, from, date, ...rest }) => {
+  if (isMessageExpired(date)) return;
   if (chatId !== id) return;
   if (from.username !== OWNER) return;
   if (!text.startsWith("/")) return bot.sendMessage(chatId, `I'm listening to commands. \ntype /start and check my commands`);

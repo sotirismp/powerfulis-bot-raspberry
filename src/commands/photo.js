@@ -1,14 +1,14 @@
-const { bot, webcam, getOpts } = require("../config");
-const chatId = Number(process.env.CHAT_ID);
-
-const fileOptions = {
-  filename: Date.now().toString(),
-  contentType: "image/jpeg",
-};
+const { sendMessage } = require("../utils/sendMessage");
+const { sendPhoto } = require("../utils/sendPhoto");
+const url = process.env.URL;
 
 exports.photo = async (msg) => {
-  msg ? bot.editMessageText(`Sending...`, getOpts(msg)) : bot.sendMessage(chatId, "Sending...");
-  webcam.capture("test_picture", async function (err, data) {
-    if (data) msg ? await bot.sendPhoto(chatId, data, {}, fileOptions) : bot.sendPhoto(chatId, data, {}, fileOptions);
-  });
+  try {
+    sendMessage("Sending...", msg);
+    const resp = await fetch(`${url}/1337/photo`);
+    const buffer = Buffer.from(await (await resp.blob()).arrayBuffer());
+    if (buffer) sendPhoto(buffer, msg);
+  } catch (err) {
+    sendMessage(err.message, msg);
+  }
 };

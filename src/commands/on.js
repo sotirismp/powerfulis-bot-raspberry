@@ -1,6 +1,11 @@
-const { bot } = require("../config");
-const chatId = Number(process.env.CHAT_ID);
+const { sendMessage } = require("../utils/sendMessage");
+const { exec } = require("child_process");
 
-exports.turnOnPc = () => {
-  bot.sendMessage(chatId, "Turning PC ON");
+exports.turnOnPc = (msg) => {
+  try {
+    exec(`sudo ${__dirname}/s.sh`, (error, stdout, stderr) => {});
+    sendMessage("Turning PC ON", msg);
+  } catch ({ message }) {
+    sendMessage(message, msg);
+  }
 };

@@ -1,6 +1,12 @@
-const { bot } = require("../config");
-const chatId = process.env.CHAT_ID;
+const { sendMessage } = require("../utils/sendMessage");
+const url = process.env.URL;
 
-exports.turnOffPc = () => {
-  bot.sendMessage(+chatId, "Turning PC OFF");
+exports.turnOffPc = async (msg) => {
+  try {
+    const resp = await fetch(`${url}/1337/off`);
+    if (!resp.ok) throw new Error("Cannot turn OFF PC");
+    sendMessage("Turning PC OFF", msg);
+  } catch ({ message }) {
+    sendMessage(message, msg);
+  }
 };

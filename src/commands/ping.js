@@ -1,6 +1,12 @@
-const { bot, options, getOpts } = require("../config");
-const chatId = Number(process.env.CHAT_ID);
+const { sendMessage } = require("../utils/sendMessage");
+var exec = require("child_process").exec;
+const url = process.env.URL;
 
-exports.ping = (msg) => {
-  msg ? bot.editMessageText("Pong!", getOpts(msg)) : bot.sendMessage(chatId, "Pong!");
+exports.ping = async (msg) => {
+  try {
+    const resp = await fetch(`${url}/1337/ping`);
+    sendMessage("Pong", msg);
+  } catch (err) {
+    sendMessage(err.message === "fetch failed" ? "Offline" : err.message, msg);
+  }
 };
