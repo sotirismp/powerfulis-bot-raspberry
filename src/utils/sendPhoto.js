@@ -1,4 +1,4 @@
-const { bot } = require("../config");
+import { bot } from "../config.js";
 const chatId = process.env.CHAT_ID;
 
 const fileOptions = {
@@ -6,6 +6,6 @@ const fileOptions = {
   contentType: "image/png",
 };
 
-exports.sendPhoto = async (buffer, msg) => {
+export const sendPhoto = async (buffer, msg) => {
   msg ? await bot.sendPhoto(chatId, buffer, {}, fileOptions) : bot.sendPhoto(chatId, buffer, {}, fileOptions);
 };

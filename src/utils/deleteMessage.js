@@ -1,6 +1,6 @@
-const { bot } = require("../config");
+import { bot } from "../config.js";
 const chatId = process.env.CHAT_ID;
 
-exports.deleteMessage = (msg) => {
+export const deleteMessage = (msg) => {
   bot.deleteMessage(chatId, msg.message_id);
 };

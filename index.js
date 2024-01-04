@@ -1,10 +1,10 @@
-const { bot } = require("./src/config");
-const { ping } = require("./src/commands/ping");
-const { turnOnPc } = require("./src/commands/on");
-const { turnOffPc } = require("./src/commands/off");
-const { photo } = require("./src/commands/photo");
-const { start } = require("./src/commands/start");
-const { isMessageExpired } = require("./src/utils/isMessageExpired");
+import { bot } from "./src/config.js";
+import { ping } from "./src/commands/ping.js";
+import { turnOnPc } from "./src/commands/on.js";
+import { turnOffPc } from "./src/commands/off.js";
+import { photo } from "./src/commands/photo.js";
+import { start } from "./src/commands/start.js";
+import { isMessageExpired } from "./src/utils/isMessageExpired.js";
 
 const OWNER = process.env.OWNER;
 const chatId = Number(process.env.CHAT_ID);

@@ -1,9 +1,8 @@
-const { fetchWrapper } = require("../utils/fetchWrapper");
-const { sendMessage } = require("../utils/sendMessage");
-var exec = require("child_process").exec;
+import { sendMessage } from "../utils/sendMessage.js";
+import { fetchWrapper } from "../utils/fetchWrapper.js";
 const url = process.env.URL;
 
-exports.ping = async (msg) => {
+export const ping = async (msg) => {
   try {
     const resp = await fetchWrapper(`${url}/1337/ping`);
     sendMessage("Pong", msg);

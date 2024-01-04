@@ -1,8 +1,8 @@
-const { fetchWrapper } = require("../utils/fetchWrapper");
-const { sendMessage } = require("../utils/sendMessage");
+import { fetchWrapper } from "../utils/fetchWrapper.js";
+import { sendMessage } from "../utils/sendMessage.js";
 const url = process.env.URL;
 
-exports.turnOffPc = async (msg) => {
+export const turnOffPc = async (msg) => {
   try {
     const resp = await fetchWrapper(`${url}/1337/off`);
     if (!resp.ok) throw new Error("Cannot turn OFF PC");

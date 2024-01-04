@@ -1,9 +1,9 @@
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
+import TelegramBot from "node-telegram-bot-api";
 dotenv.config();
-const TelegramBot = require("node-telegram-bot-api");
 const token = process.env.TOKEN;
 
-const bot = new TelegramBot(token, { polling: true });
+export const bot = new TelegramBot(token, { polling: true });
 
 bot.setMyCommands([
   {
@@ -24,7 +24,7 @@ bot.setMyCommands([
   },
 ]);
 
-const options = {
+export const options = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
       [
@@ -39,13 +39,9 @@ const options = {
   }),
 };
 
-const getOpts = (msg) => {
+export const getOpts = (msg) => {
   return {
     chat_id: msg.chat.id,
     message_id: msg.message_id,
   };
 };
-
-exports.getOpts = getOpts;
-exports.options = options;
-exports.bot = bot;

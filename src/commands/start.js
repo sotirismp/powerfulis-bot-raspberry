@@ -1,7 +1,6 @@
-const { bot } = require("../config");
-const { options } = require("../config");
+import { bot, options } from "../config.js";
 const chatId = Number(process.env.CHAT_ID);
 
-exports.start = () => {
+export const start = () => {
   bot.sendMessage(chatId, "Choose one of the following commands:", options);
 };

@@ -1,9 +1,10 @@
-const { fetchWrapper } = require("../utils/fetchWrapper");
-const { sendMessage } = require("../utils/sendMessage");
-const { sendPhoto } = require("../utils/sendPhoto");
+import { sendPhoto } from "../utils/sendPhoto.js";
+import { sendMessage } from "../utils/sendMessage.js";
+import { fetchWrapper } from "../utils/fetchWrapper.js";
+
 const url = process.env.URL;
 
-exports.photo = async (msg) => {
+export const photo = async (msg) => {
   try {
     sendMessage("Sending...", msg);
     const resp = await fetchWrapper(`${url}/1337/photo`, 10000);

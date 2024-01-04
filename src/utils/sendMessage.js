@@ -1,6 +1,6 @@
-const { bot, getOpts } = require("../config");
+import { bot, getOpts } from "../config.js";
 const chatId = process.env.CHAT_ID;
 
-exports.sendMessage = (message, msg) => {
+export const sendMessage = (message, msg) => {
   msg ? bot.editMessageText(message, getOpts(msg)) : bot.sendMessage(chatId, message);
 };
