@@ -1,5 +1,5 @@
-exports.fetchWrapper = (url) => {
+exports.fetchWrapper = (url, timeout = 3000) => {
   const controller = new AbortController();
-  setTimeout(() => controller.abort(), 3000);
+  setTimeout(() => controller.abort(), timeout);
   return fetch(url, { signal: controller.signal });
 };
