@@ -8,34 +8,38 @@ import { photo } from "./src/commands/photo.js";
 import { start } from "./src/commands/start.js";
 import { isMessageExpired } from "./src/utils/isMessageExpired.js";
 import { sendMessage } from "./src/utils/sendMessage.js";
+import { mp3 } from "./src/commands/mp3.js";
 
 const OWNER = process.env.OWNER;
 const chatId = Number(process.env.CHAT_ID);
 
-bot.on("message", async ({ text, chat: { id }, from, date }) => {
+export let mode = {
+  type: "command",
+  module: "",
+};
+
+export const changeMode = (newMode) => {
+  mode = { ...newMode };
+};
+
+bot.on("message", async (msg) => {
+  const { text, chat, from, date } = msg;
   if (isMessageExpired(date)) return;
   if (from.username !== OWNER) return await bot.sendMessage(id, `I'm sorry, you don't have permissions 😟`);
-  if (chatId !== id) return;
-  if (!text.startsWith("/")) return await sendMessage(`I'm listening to commands. \ntype /start and check my commands`);
+  if (chatId !== chat.id) return;
 
-  switch (text) {
-    case "/start":
-      start();
-      break;
-    case "/ping":
-      ping();
-      break;
-    case "/on":
-      turnOnPc();
-      break;
-    case "/off":
-      turnOffPc();
-      break;
-    case "/photo":
-      photo();
-      break;
-    default:
-      bot.sendMessage(id, "Unknown command");
+  if (mode.type === "command") {
+    if (!text.startsWith("/")) return await sendMessage(`I'm listening to commands. \ntype /start and check my commands`);
+    const command = text.split(" ")[0];
+    if (command === "/start") return start();
+    if (command === "/ping") return ping();
+    if (command === "/on") return turnOnPc();
+    if (command === "/off") return turnOffPc();
+    if (command === "/photo") return photo();
+    if (command === "/yt") return mp3(text);
+    bot.sendMessage(id, "Unknown command");
+  } else if (mode.type === "listening") {
+    if (mode.module === "/yt") return mp3(text);
   }
 });
 
@@ -46,6 +50,7 @@ bot.on("callback_query", async function onCallbackQuery(callbackQuery) {
   if (action === "ping") ping(msg);
   if (action === "on") turnOnPc(msg);
   if (action === "off") turnOffPc(msg);
+  if (action === "yt") mp3("", msg);
 });
 
 bot.on("polling_error", (error) => {

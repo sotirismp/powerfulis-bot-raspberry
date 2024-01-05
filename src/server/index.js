@@ -1,7 +1,7 @@
 import express from "express";
 import { sendMessage } from "../utils/sendMessage.js";
 import { start } from "../commands/start.js";
-const PORT = 3000;
+const PORT = 2999;
 const app = express();
 
 app.get("/", async (req, res) => {
@@ -14,6 +14,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.listen(2999, () => console.log(`Server is running at port: ${PORT}`));
+app.listen(PORT, () => console.log(`Server is running at port: ${PORT}`));
 
 export default app;

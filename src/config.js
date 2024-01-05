@@ -8,6 +8,10 @@ export const bot = new TelegramBot(token, { polling: true });
 
 bot.setMyCommands([
   {
+    command: "start",
+    description: "Check the commands of the bot",
+  },
+  {
     command: "ping",
     description: "Check if PC is ON",
   },
@@ -23,6 +27,10 @@ bot.setMyCommands([
     command: "photo",
     description: "Take photo from webcam",
   },
+  {
+    command: "yt",
+    description: "Download mp3 from YT with URL",
+  },
 ]);
 
 export const options = {
@@ -36,6 +44,7 @@ export const options = {
         { text: "Photo 📸", callback_data: "photo" },
         { text: "Ping 🏓", callback_data: "ping" },
       ],
+      [{ text: "YouTube 🔴", callback_data: "yt" }],
     ],
   }),
 };
