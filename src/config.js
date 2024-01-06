@@ -24,6 +24,10 @@ bot.setMyCommands([
     description: "Turns OFF the PC",
   },
   {
+    command: "restart",
+    description: "Restarts the PC",
+  },
+  {
     command: "photo",
     description: "Take photo from webcam",
   },
@@ -39,6 +43,7 @@ export const options = {
       [
         { text: "Turn ON PC ⚡", callback_data: "on" },
         { text: "Turn OFF PC ⛔", callback_data: "off" },
+        { text: "Reboot PC 🔄", callback_data: "restart" },
       ],
       [
         { text: "Photo 📸", callback_data: "photo" },

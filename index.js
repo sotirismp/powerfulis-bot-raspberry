@@ -9,6 +9,7 @@ import { start } from "./src/commands/start.js";
 import { isMessageExpired } from "./src/utils/isMessageExpired.js";
 import { sendMessage } from "./src/utils/sendMessage.js";
 import { mp3 } from "./src/commands/mp3.js";
+import { restartPc } from "./src/commands/restart.js";
 
 const OWNER = process.env.OWNER;
 const chatId = Number(process.env.CHAT_ID);
@@ -35,6 +36,7 @@ bot.on("message", async (msg) => {
     if (command === "/ping") return ping();
     if (command === "/on") return turnOnPc();
     if (command === "/off") return turnOffPc();
+    if (command === "/restart") return restartPc();
     if (command === "/photo") return photo();
     if (command === "/yt") return mp3(text);
     bot.sendMessage(id, "Unknown command");
@@ -50,6 +52,7 @@ bot.on("callback_query", async function onCallbackQuery(callbackQuery) {
   if (action === "ping") ping(msg);
   if (action === "on") turnOnPc(msg);
   if (action === "off") turnOffPc(msg);
+  if (action === "restart") restartPc(msg);
   if (action === "yt") mp3("", msg);
 });
 
