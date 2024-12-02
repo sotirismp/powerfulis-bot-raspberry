@@ -8,11 +8,8 @@ import { mode, changeMode } from "../../index.js";
 export const mp3 = async (text, msg) => {
   try {
     const { type } = mode;
-    let maxContent = 0;
-    let maxBitrate = 0;
+
     let buffer = [];
-    let currentIndex = 0;
-    const portions = 10;
     let ytURL = text.split(" ")[type === "command" ? 1 : 0];
 
     if (!ytURL) {
@@ -26,17 +23,11 @@ export const mp3 = async (text, msg) => {
         title,
         author: { name },
       },
-      formats,
     } = await ytdl.getBasicInfo(ytURL);
 
-    formats
-      .filter((item) => item?.mimeType.startsWith(`audio`))
-      .map(({ contentLength, bitrate }) => {
-        if (bitrate > maxBitrate) {
-          maxContent = Number(contentLength);
-          maxBitrate = bitrate;
-        }
-      });
+    if (!title || !name) throw new Error("Cannot find the video ❌");
+
+    addMessage(`Video found, downloading... ⬇️`, message);
 
     const my_transform = new Transform({
       transform(chunk, encoding, callback) {
@@ -52,21 +43,10 @@ export const mp3 = async (text, msg) => {
       changeMode({ type: "command" });
     });
 
-    let i = 1;
-    const chunk = maxContent / portions;
-    let percentage = chunk * i;
-    my_transform.on("data", async (buf) => {
+    my_transform.on("data", (buf) => {
       buffer.push(buf);
-      currentIndex += Buffer.byteLength(buf);
-      if (currentIndex >= percentage && i <= portions) {
-        let str = "";
-        for (let j = 1; j <= i; j++) str += "🟦";
-        for (let j = 1; j <= portions - i; j++) str += "⬜";
-        addMessage(`Downloading ⬇️\n ${str}`, message);
-        i++;
-        percentage = chunk * i;
-      }
     });
+
     ytdl(ytURL, { format: "mp3", filter: "audioonly" }).pipe(my_transform);
   } catch ({ message }) {
     addMessage(message);
