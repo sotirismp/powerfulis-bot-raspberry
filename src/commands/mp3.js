@@ -1,4 +1,4 @@
-import ytdl from "ytdl-core";
+import ytdl from "@distube/ytdl-core";
 import { sendMessage } from "../utils/sendMessage.js";
 import { Transform } from "stream";
 import { sendAudio } from "../utils/sendAudio.js";

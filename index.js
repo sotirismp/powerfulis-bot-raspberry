@@ -1,5 +1,10 @@
 import dotenv from "dotenv";
-dotenv.config();
+import * as path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: path.join(__dirname, ".env") });
 import { bot } from "./src/config.js";
 import { ping } from "./src/commands/ping.js";
 import { turnOnPc } from "./src/commands/on.js";
@@ -26,11 +31,18 @@ export const changeMode = (newMode) => {
 bot.on("message", async (msg) => {
   const { text, chat, from, date } = msg;
   if (isMessageExpired(date)) return;
-  if (from.username !== OWNER) return await bot.sendMessage(id, `I'm sorry, you don't have permissions 😟`);
+  if (from.username !== OWNER)
+    return await bot.sendMessage(
+      id,
+      `I'm sorry, you don't have permissions 😟`
+    );
   if (chatId !== chat.id) return;
 
   if (mode.type === "command") {
-    if (!text.startsWith("/")) return await sendMessage(`I'm listening to commands. \ntype /start and check my commands`);
+    if (!text.startsWith("/"))
+      return await sendMessage(
+        `I'm listening to commands. \ntype /start and check my commands`
+      );
     const command = text.split(" ")[0];
     if (command === "/start") return start();
     if (command === "/ping") return ping();
