@@ -1,15 +1,18 @@
 import ytdl from "@distube/ytdl-core";
+
 import { sendMessage } from "../utils/sendMessage.js";
-import { Transform } from "stream";
 import { sendAudio } from "../utils/sendAudio.js";
 import { addMessage } from "../utils/RequestQueue.js";
 import { mode, changeMode } from "../../index.js";
+
+function sanitizeFilename(title) {
+  return title.replace(/[<>:"/\\|?*]+/g, "").trim(); // Remove invalid characters and trim spaces
+}
 
 export const mp3 = async (text, msg) => {
   try {
     const { type } = mode;
 
-    let buffer = [];
     let ytURL = text.split(" ")[type === "command" ? 1 : 0];
 
     if (!ytURL) {
@@ -29,27 +32,28 @@ export const mp3 = async (text, msg) => {
 
     addMessage(`Video found, downloading... ⬇️`, message);
 
-    const my_transform = new Transform({
-      transform(chunk, encoding, callback) {
-        callback(null, chunk);
+    const audioStream = ytdl(ytURL, {
+      quality: "lowestaudio",
+      filter: (format) => {
+        return format.mimeType?.includes("audio/mp4");
       },
     });
-
-    my_transform.on("end", async () => {
-      var totalBuffer = Buffer.concat(buffer);
-      addMessage(`Sending to you... ➡️`, message);
-      await sendAudio(totalBuffer, { title, name });
-      addMessage(`Send. ✅`, message);
-      changeMode({ type: "command" });
+    const bufferChunks = [];
+    audioStream.on("data", (chunk) => bufferChunks.push(chunk));
+    audioStream.on("end", async () => {
+      try {
+        const audioBuffer = Buffer.concat(bufferChunks);
+        addMessage(`Sending the audio... ➡️`, message);
+        await sendAudio(audioBuffer, { title: sanitizeFilename(title), name });
+        addMessage(`Sent. ✅`, message);
+        changeMode({ type: "command" });
+      } catch (error) {
+        addMessage(`Error sending audio: ${error.message}`, message);
+        changeMode({ type: "command" });
+      }
     });
-
-    my_transform.on("data", (buf) => {
-      buffer.push(buf);
-    });
-
-    ytdl(ytURL, { format: "mp3", filter: "audioonly" }).pipe(my_transform);
-  } catch ({ message }) {
-    addMessage(message);
+  } catch (error) {
+    addMessage(error.message);
     changeMode({ type: "command" });
   }
 };
