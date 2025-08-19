@@ -1,10 +1,15 @@
 import dotenv from "dotenv";
-dotenv.config();
-const token = process.env.TOKEN;
 import TelegramBot from "node-telegram-bot-api";
-import app from "./server/index.js";
 
-export const bot = new TelegramBot(token, { polling: true });
+dotenv.config();
+const TOKEN = process.env.TOKEN;
+export const URL = `http://${process.env.PC_IP}:9996`;
+export const SH_PATH = process.env.SH_PATH;
+export const HOST = process.env.PC_IP;
+export const OWNER = process.env.OWNER;
+export const CHAT_ID = Number(process.env.CHAT_ID);
+
+export const bot = new TelegramBot(TOKEN, { polling: true });
 
 bot.setMyCommands([
   {
@@ -31,10 +36,6 @@ bot.setMyCommands([
     command: "photo",
     description: "Take photo from webcam",
   },
-  {
-    command: "yt",
-    description: "Download mp3 from YT with URL",
-  },
 ]);
 
 export const options = {
@@ -49,7 +50,6 @@ export const options = {
         { text: "Photo 📸", callback_data: "photo" },
         { text: "Ping 🏓", callback_data: "ping" },
       ],
-      [{ text: "YouTube 🔴", callback_data: "yt" }],
     ],
   }),
 };

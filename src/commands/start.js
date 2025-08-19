@@ -1,6 +1,5 @@
-import { bot, options } from "../config.js";
-const chatId = Number(process.env.CHAT_ID);
+import { bot, CHAT_ID, options } from "../config.js";
 
 export const start = async () => {
-  await bot.sendMessage(chatId, "Choose one of the following commands: ✅", options);
+  await bot.sendMessage(CHAT_ID, "Choose one of the following commands: ✅", options);
 };

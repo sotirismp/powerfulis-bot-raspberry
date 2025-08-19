@@ -1,5 +1,4 @@
-import { bot } from "../config.js";
-const chatId = process.env.CHAT_ID;
+import { bot, CHAT_ID } from "../config.js";
 
 const fileOptions = {
   filename: Date.now().toString(),
@@ -7,5 +6,5 @@ const fileOptions = {
 };
 
 export const sendPhoto = async (buffer, msg) => {
-  msg ? await bot.sendPhoto(chatId, buffer, {}, fileOptions) : bot.sendPhoto(chatId, buffer, {}, fileOptions);
+  msg ? await bot.sendPhoto(CHAT_ID, buffer, {}, fileOptions) : bot.sendPhoto(CHAT_ID, buffer, {}, fileOptions);
 };
