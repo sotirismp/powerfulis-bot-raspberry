@@ -2,7 +2,7 @@ import Ping from "ping";
 import { exec } from "child_process";
 
 import { sendMessage } from "../utils/sendMessage.js";
-import { HOST } from "../config.js";
+import { HOST, SH_PATH } from "../config.js";
 
 export const turnOnPc = async (msg) => {
   try {

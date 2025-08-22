@@ -18,7 +18,7 @@ import { restartPc } from "./src/commands/restart.js";
 bot.on("message", async (msg) => {
   const { text, chat, from, date } = msg;
   if (isMessageExpired(date)) return;
-  if (from.username !== OWNER) return await bot.sendMessage(id, `I'm sorry, you don't have permissions 😟`);
+  if (from.username !== OWNER) return await bot.sendMessage(chat.id, `I'm sorry, you don't have permissions 😟`);
   if (CHAT_ID !== chat.id) return;
 
   if (!text.startsWith("/")) return await sendMessage(`I'm listening to commands. \ntype /start and check my commands`);
