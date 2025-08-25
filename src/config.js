@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import TelegramBot from "node-telegram-bot-api";
+import app from "../src/server/index.js";
 
 dotenv.config();
 const TOKEN = process.env.TOKEN;
